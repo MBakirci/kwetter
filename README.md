@@ -1,2 +1,2 @@
 # kwetter
-Twitter clone for JEA6a
+Twitter clone for JEA6a. 
