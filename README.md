@@ -1,3 +1,3 @@
 # kwetter
 Twitter clone for JEA6a. 
-Yo 
+Yo waarom doet test het niet?
