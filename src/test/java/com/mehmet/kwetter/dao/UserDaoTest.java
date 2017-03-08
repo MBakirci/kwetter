@@ -23,7 +23,7 @@ public class UserDaoTest {
 
     @Test
     public void testDit(){
-        String ikke = "Mehmet";
+        String ikke = "Me hmet";
         assertEquals("Mehmet",ikke);
     }
 
