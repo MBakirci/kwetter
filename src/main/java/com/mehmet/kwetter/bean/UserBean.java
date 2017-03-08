@@ -18,6 +18,8 @@ public class UserBean {
 
     @Inject
     private UserService userService;
+	
+	
 
     private String userName;
     private String profilePicLocation;
