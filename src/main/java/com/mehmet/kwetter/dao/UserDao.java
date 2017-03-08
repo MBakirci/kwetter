@@ -16,9 +16,7 @@ public class UserDao implements IDao<User, Long> {
 
     @PersistenceContext
     private EntityManager em;
-
-    private String i;
-
+    
     public UserDao() {
     }
 
