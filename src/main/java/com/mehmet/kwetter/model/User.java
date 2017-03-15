@@ -1,31 +1,53 @@
 package com.mehmet.kwetter.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Mehmet
  */
 @Entity
-@Table(name = "user")
+@NamedQueries({
+        @NamedQuery(name = "User.findAll",
+                query = "SELECT u FROM User u"),
+        @NamedQuery(name = "User.findById",
+                query = "SELECT u FROM User u WHERE u.id = :id"),
+        @NamedQuery(name = "User.findByUsername",
+                query = "SELECT u FROM User u WHERE u.username = UPPER(:username)")
+})
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue
+    private Long id;
 
-    private String userName;
-    private String profilePicLocation;
-    @OneToOne
-    @MapsId
-    private UserDetails userDetails;
+    private String username;
+    private String profilePicUrl;
+
+    private UserDetail userdetail;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Tweet> tweets;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinTable(
+            name = "follower",
+            joinColumns = {@JoinColumn(name = "follower_id")},
+            inverseJoinColumns = {@JoinColumn(name = "following_id")}
+    )
+    private Set<User> followers = new HashSet<>();
+    @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<User> following = new HashSet<>();
 
     public User() {
     }
 
-    public User(String userName, String profilePicLocation, UserDetails userDetails) {
-        this.userName = userName;
-        this.profilePicLocation = profilePicLocation;
-        this.userDetails = userDetails;
+    public User(String userName, String profilePicUrl, UserDetail userDetail) {
+        this.username = userName;
+        this.profilePicUrl = profilePicUrl;
+        this.userdetail = userDetail;
     }
 
     public long getId() {
@@ -36,28 +58,68 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
-    public String getProfilePicLocation() {
-        return profilePicLocation;
+    public String getProfilePicUrl() {
+        return profilePicUrl;
     }
 
-    public void setProfilePicLocation(String profilePicLocation) {
-        this.profilePicLocation = profilePicLocation;
+    public void setProfilePicUrl(String profilePicLocation) {
+        this.profilePicUrl = profilePicLocation;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public UserDetail getUserdetail() {
+        return userdetail;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setUserdetail(UserDetail userDetail) {
+        this.userdetail = userDetail;
     }
 
+    @XmlTransient
+    public Set<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(Set<Tweet> tweets) {
+        this.tweets = tweets;
+    }
+
+    public void addTweet(Tweet tweet) {
+        this.tweets.add(tweet);
+    }
+
+    @XmlTransient
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
+
+    @XmlTransient
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
+
+    public void addFollower(User follower) {
+        followers.add(follower);
+        follower.following.add(this);
+    }
+
+    public void removeFollower(User follower) {
+        followers.remove(follower);
+        follower.following.remove(this);
+    }
 }

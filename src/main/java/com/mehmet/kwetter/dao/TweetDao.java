@@ -1,36 +1,15 @@
 package com.mehmet.kwetter.dao;
 
 import com.mehmet.kwetter.model.Tweet;
+import com.mehmet.kwetter.model.User;
 
 import java.util.List;
 
 /**
- * Created by Mehmet on 3/1/2017.
+ * Created by Mehmet on 3/14/2017.
  */
-public class TweetDao implements IDao<Tweet, Long> {
-
-    @Override
-    public boolean create(Tweet tweet) {
-        return false;
-    }
-
-    @Override
-    public Tweet find(Long id) {
-        return null;
-    }
-
-    @Override
-    public Tweet update(Tweet tweet) {
-        return null;
-    }
-
-    @Override
-    public void delete(Tweet tweet) {
-
-    }
-
-    @Override
-    public List<Tweet> findAll() {
-        return null;
-    }
+public interface TweetDao extends IDao<Tweet> {
+    void LikeTweet(Tweet tweet, User liker);
+    List<Tweet> findTweetByUserId(Long userId);
+    List<Tweet> findRecentTweetByUserId(Long userId);
 }

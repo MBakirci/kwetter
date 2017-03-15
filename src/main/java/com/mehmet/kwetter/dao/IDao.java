@@ -2,16 +2,17 @@ package com.mehmet.kwetter.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mehmet on 3/1/2017.
  */
-public interface IDao<T, PK extends Serializable> {
+public interface IDao<T> {
     /**
-     * @param t
-     * @return true when passed, false when failed
+     * @return a list of founded given objects of T
      */
-    boolean create(T t);
+    List<T> findAll();
+
 
     /**
      * This method is used to Get the object by them id
@@ -19,7 +20,13 @@ public interface IDao<T, PK extends Serializable> {
      * @param id
      * @return Found object T by id
      */
-    T find(PK id);
+    T find(Object id);
+
+    /**
+     * @param t
+     * @return true when passed, false when failed
+     */
+    T create(T t);
 
     /**
      * This method is used to Delete the given t of type T(Object)
@@ -27,17 +34,13 @@ public interface IDao<T, PK extends Serializable> {
      * @param t
      * @return The updated object T
      */
-    T update(T t);
+    T update(final T t);
 
     /**
      * This method is used to Delete the given t of type T(Object)
      *
      * @param t this is the given object
      */
-    void delete(T t);
+    void delete(Object t);
 
-    /**
-     * @return a list of founded given objects of T
-     */
-    List<T> findAll();
 }

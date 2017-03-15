@@ -1,31 +1,24 @@
 package com.mehmet.kwetter.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Created by Mehmet on 3/1/2017.
  */
-@Entity
-@Table(name = "user_detail")
-public class UserDetails {
+@Embeddable
+public class UserDetail {
+    @Size(max = 160)
+    private String bio;
+    private String location, website;
 
-    @Id
-    private long id;
-    private String bio, location, website;
-
-    public UserDetails() {
+    public UserDetail() {
     }
 
-    public UserDetails(String bio, String location, String website) {
+    public UserDetail(String bio, String location, String website) {
         this.bio = bio;
         this.location = location;
         this.website = website;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getBio() {
@@ -51,4 +44,5 @@ public class UserDetails {
     public void setWebsite(String website) {
         this.website = website;
     }
+
 }

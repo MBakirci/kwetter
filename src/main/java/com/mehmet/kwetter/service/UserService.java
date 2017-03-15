@@ -1,5 +1,6 @@
 package com.mehmet.kwetter.service;
 
+import com.mehmet.kwetter.dao.TweetDao;
 import com.mehmet.kwetter.dao.UserDao;
 import com.mehmet.kwetter.model.User;
 
@@ -16,6 +17,9 @@ public class UserService {
     @Inject
     private UserDao userDao;
 
+    @Inject
+    private TweetDao tweetDao;
+
     public UserService() {
     }
 
@@ -23,20 +27,32 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    /**
-     * Create and add an user. true when an username is not used. false when
-     * username already in use
-     *
-     * @param user
-     * @return true when username is not in use and everything got well. false
-     * when username is in use
-     */
-    public boolean addUser(User user) {
-        return userDao.create(user);
-    }
-
     public List<User> getUsers() {
         return userDao.findAll();
     }
 
+    public User getUser(Long id) {
+        return userDao.find(id);
+    }
+
+    public void createUser(User user) {
+        userDao.create(user);
+    }
+
+    public void updateUser(User user) {
+        userDao.update(user);
+    }
+
+    public void removeUser(User user) {
+        userDao.delete(user.getId());
+    }
+
+    public void followUser(Long followerId, Long toFollowId) {
+        userDao.followUser(followerId, toFollowId);
+    }
+
+
+    public void unFollowUser(Long followerId, Long toFollowId) {
+        userDao.unFollowUser(followerId, toFollowId);
+    }
 }
