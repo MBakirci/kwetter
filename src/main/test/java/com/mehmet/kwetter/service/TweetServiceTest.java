@@ -35,45 +35,9 @@ public class TweetServiceTest {
     }
 
     @Test
-    public void getAllTweets() throws Exception {
-
-    }
-
-    @Test
-    public void getTweetById() throws Exception {
-
-    }
-
-    @Test
     public void createTweet() throws Exception {
         Tweet t1 = new Tweet("tweet1", new User());
         tweetService.createTweet(t1);
         verify(tweetDao, Mockito.times(1)).create(t1);
     }
-
-    @Test
-    public void updateTweet() throws Exception {
-
-    }
-
-    @Test
-    public void removeTweet() throws Exception {
-
-    }
-
-    @Test
-    public void likeTweet() throws Exception {
-
-    }
-
-    @Test
-    public void tweetsByUser() throws Exception {
-
-    }
-
-    @Test
-    public void recentTweetsByUser() throws Exception {
-
-    }
-
 }

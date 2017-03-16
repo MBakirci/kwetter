@@ -38,6 +38,10 @@ public class UserService {
         return userDao.find(id);
     }
 
+    public User getUser(String username) throws UserNotFoundException {
+        return userDao.findByUsername(username);
+    }
+
     public void createUser(User user) throws UserAlreadyExcistException {
         userDao.create(user);
     }
@@ -58,4 +62,5 @@ public class UserService {
     public void unFollowUser(Long followerId, Long toFollowId) throws UserNotFoundException {
         userDao.unFollowUser(followerId, toFollowId);
     }
+
 }
