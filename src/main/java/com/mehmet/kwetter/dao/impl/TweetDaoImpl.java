@@ -7,9 +7,7 @@ import com.mehmet.kwetter.model.Tweet;
 import com.mehmet.kwetter.model.User;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -25,6 +23,11 @@ public class TweetDaoImpl extends DaoFacade<Tweet> implements TweetDao {
     @Override
     public List<Tweet> findAll() {
         return null;
+    }
+
+    @Override
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 
     @Override

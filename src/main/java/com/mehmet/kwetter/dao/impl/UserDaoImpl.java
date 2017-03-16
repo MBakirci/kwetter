@@ -5,6 +5,7 @@ import com.mehmet.kwetter.dao.UserDao;
 import com.mehmet.kwetter.model.User;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -20,6 +21,11 @@ public class UserDaoImpl extends DaoFacade<User> implements UserDao {
     @Override
     public List<User> findAll() {
         return em.createNamedQuery("User.findAll").getResultList();
+    }
+
+    @Override
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 
     @Override

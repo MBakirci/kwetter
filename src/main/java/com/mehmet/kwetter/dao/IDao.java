@@ -1,8 +1,7 @@
 package com.mehmet.kwetter.dao;
 
-import java.io.Serializable;
+import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Mehmet on 3/1/2017.
@@ -43,4 +42,5 @@ public interface IDao<T> {
      */
     void delete(Object t);
 
+    void setEm(EntityManager em);
 }
