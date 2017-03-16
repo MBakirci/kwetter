@@ -1,7 +1,6 @@
 package com.mehmet.kwetter.bean;
 
-import com.mehmet.kwetter.model.User;
-import com.mehmet.kwetter.model.UserDetail;
+import com.mehmet.kwetter.domain.UserDetail;
 import com.mehmet.kwetter.service.UserService;
 
 import javax.enterprise.context.RequestScoped;

@@ -1,8 +1,11 @@
 package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.dao.TweetDao;
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.exception.TweetNotFoundException;
+import com.mehmet.kwetter.exception.UserAlreadyExcistException;
+import com.mehmet.kwetter.exception.UserNotFoundException;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -28,24 +31,24 @@ public class TweetService {
         return tweetDao.findAll();
     }
 
-    public Tweet getTweetById(Long id) {
+    public Tweet getTweetById(Long id) throws UserNotFoundException, TweetNotFoundException {
         return tweetDao.find(id);
     }
 
-    public void createTweet(Tweet tweet) {
+    public void createTweet(Tweet tweet) throws UserAlreadyExcistException {
         tweetDao.create(tweet);
     }
 
-    public void updateTweet(Tweet tweet) {
+    public void updateTweet(Tweet tweet) throws UserNotFoundException {
         tweetDao.update(tweet);
     }
 
-    public void removeTweet(Tweet tweet) {
+    public void removeTweet(Tweet tweet) throws UserNotFoundException, TweetNotFoundException {
         tweetDao.delete(tweet.getId());
     }
 
     public void likeTweet(Tweet tweet, User liker) {
-        tweetDao.LikeTweet(tweet, liker);
+        tweetDao.likeTweet(tweet, liker);
     }
 
     public List<Tweet> tweetsByUser(Long userId) {

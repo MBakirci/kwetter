@@ -1,8 +1,10 @@
 package com.mehmet.kwetter.service;
 
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
-import com.mehmet.kwetter.model.UserDetail;
+import com.mehmet.kwetter.exception.UserAlreadyExcistException;
+import com.mehmet.kwetter.exception.UserNotFoundException;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
+import com.mehmet.kwetter.domain.UserDetail;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -27,7 +29,7 @@ public class Startup {
     }
 
     @PostConstruct
-    private void initData() {
+    private void initData() throws UserAlreadyExcistException, UserNotFoundException {
         List<User> users = new ArrayList<>();
         List<Tweet> tweets = new ArrayList<>();
 
@@ -55,6 +57,8 @@ public class Startup {
         tweetService.likeTweet(tweets.get(0), users.get(3));
         tweetService.likeTweet(tweets.get(0), users.get(4));
         tweetService.likeTweet(tweets.get(0), users.get(5));
+        tweetService.likeTweet(tweets.get(1), users.get(4));
+        tweetService.likeTweet(tweets.get(1), users.get(5));
         userService.followUser(users.get(1).getId(), users.get(0).getId());
         userService.followUser(5L, 6L);
     }

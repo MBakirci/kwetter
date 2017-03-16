@@ -1,12 +1,7 @@
-package com.mehmet.kwetter.model;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -15,9 +10,10 @@ import java.util.*;
  */
 @Entity
 @NamedQueries({
+        @NamedQuery(name = "Tweet.findAll", query = "SELECT k FROM Tweet k "),
         @NamedQuery(name = "Tweet.findByUserId", query = "SELECT k FROM Tweet k WHERE k.user.id = :userId ORDER BY k.date DESC"),
 })
-public class Tweet {
+public class Tweet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +25,7 @@ public class Tweet {
     private String dateString;
 
     @OneToMany(mappedBy = "tweet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Heart> hearts = new ArrayList<>();
+    private Set<Heart> hearts = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -75,11 +71,11 @@ public class Tweet {
         this.date = date;
     }
 
-    public List<Heart> getHearts() {
+    public Set<Heart> getHearts() {
         return hearts;
     }
 
-    public void setHearts(List<Heart> hearts) {
+    public void setHearts(Set<Heart> hearts) {
         this.hearts = hearts;
     }
 
@@ -99,5 +95,9 @@ public class Tweet {
 
     public void setDateString(String dateString) {
         this.dateString = dateString;
+    }
+
+    public void addHeart(Heart heart) {
+        hearts.add(heart);
     }
 }

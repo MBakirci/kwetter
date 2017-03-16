@@ -1,4 +1,4 @@
-package com.mehmet.kwetter.model;
+package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
@@ -23,6 +23,7 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(unique=true)
     private String username;
     private String profilePicUrl;
 
@@ -31,6 +32,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Tweet> tweets;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Heart> hearts;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(
             name = "follower",
@@ -38,6 +42,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "following_id")}
     )
     private Set<User> followers = new HashSet<>();
+
     @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<User> following = new HashSet<>();
 
@@ -111,6 +116,15 @@ public class User {
 
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
+    }
+
+    @XmlTransient
+    public Set<Heart> getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(Set<Heart> hearts) {
+        this.hearts = hearts;
     }
 
     public void addFollower(User follower) {

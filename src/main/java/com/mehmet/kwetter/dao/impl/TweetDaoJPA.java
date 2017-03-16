@@ -2,12 +2,12 @@ package com.mehmet.kwetter.dao.impl;
 
 import com.mehmet.kwetter.dao.DaoFacade;
 import com.mehmet.kwetter.dao.TweetDao;
-import com.mehmet.kwetter.model.Heart;
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.Heart;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -16,20 +16,34 @@ import java.util.List;
  * Created by Mehmet on 3/1/2017.
  */
 @Stateless
-public class TweetDaoImpl extends DaoFacade<Tweet> implements TweetDao {
+@Default
+public class TweetDaoJPA extends DaoFacade<Tweet> implements TweetDao {
 
-    public TweetDaoImpl() {
+    public TweetDaoJPA() {
         super(Tweet.class);
+    }
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
     @Override
     public List<Tweet> findAll() {
-        return null;
+        return em.createNamedQuery("Tweet.findAll").getResultList();
     }
 
     @Override
-    public void LikeTweet(Tweet tweet, User liker) {
-        em.persist(new Heart(tweet,liker));
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    @Override
+    public void likeTweet(Tweet tweet, User liker) {
+        tweet.addHeart(new Heart(tweet,liker));
     }
 
     @Override

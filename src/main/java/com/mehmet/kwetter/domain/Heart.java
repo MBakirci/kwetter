@@ -1,11 +1,7 @@
-package com.mehmet.kwetter.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Mehmet on 3/14/2017.
@@ -17,14 +13,9 @@ public class Heart {
     @GeneratedValue
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_heart",
-            joinColumns =
-            @JoinColumn(name = "heart_id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "user_id")
-    )
-    private Set<User> user = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tweet_id")
@@ -35,9 +26,7 @@ public class Heart {
 
     public Heart(Tweet tweet, User user) {
         this.tweet = tweet;
-        if (!this.user.contains(user)) {
-            this.user.add(user);
-        }
+        this.user = user;
     }
 
     public Long getId() {
@@ -48,11 +37,11 @@ public class Heart {
         this.id = id;
     }
 
-    public Set<User> getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Set<User> user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
