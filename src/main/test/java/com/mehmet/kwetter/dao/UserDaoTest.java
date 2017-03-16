@@ -1,6 +1,8 @@
 package com.mehmet.kwetter.dao;
 
 import com.mehmet.kwetter.dao.impl.UserDaoJPA;
+import com.mehmet.kwetter.exception.UserAlreadyExcistException;
+import com.mehmet.kwetter.exception.UserNotFoundException;
 import com.mehmet.kwetter.model.User;
 import com.mehmet.kwetter.model.UserDetail;
 import com.mehmet.kwetter.service.UserServiceTest;
@@ -50,7 +52,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void savingUserSuccessful() {
+    public void savingUserSuccessful() throws UserAlreadyExcistException {
         Integer expectedResult = 1;
         User user = new User("Mehmet", "null", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""));
         tx.begin();
@@ -63,7 +65,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void findUserSuccessful() {
+    public void findUserSuccessful() throws UserAlreadyExcistException, UserNotFoundException {
         User user = new User("Mehmet", "geen locatie", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""));
         tx.begin();
         userDao.create(user);

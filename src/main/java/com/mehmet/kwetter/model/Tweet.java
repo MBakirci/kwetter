@@ -31,7 +31,7 @@ public class Tweet implements Serializable {
     private String dateString;
 
     @OneToMany(mappedBy = "tweet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Heart> hearts = new ArrayList<>();
+    private Set<Heart> hearts = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -77,11 +77,11 @@ public class Tweet implements Serializable {
         this.date = date;
     }
 
-    public List<Heart> getHearts() {
+    public Set<Heart> getHearts() {
         return hearts;
     }
 
-    public void setHearts(List<Heart> hearts) {
+    public void setHearts(Set<Heart> hearts) {
         this.hearts = hearts;
     }
 
@@ -101,5 +101,9 @@ public class Tweet implements Serializable {
 
     public void setDateString(String dateString) {
         this.dateString = dateString;
+    }
+
+    public void addHeart(Heart heart) {
+        hearts.add(heart);
     }
 }

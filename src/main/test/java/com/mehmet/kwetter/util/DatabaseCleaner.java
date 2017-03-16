@@ -1,6 +1,7 @@
 package com.mehmet.kwetter.util;
 
 
+import com.mehmet.kwetter.model.Heart;
 import com.mehmet.kwetter.model.Tweet;
 import com.mehmet.kwetter.model.User;
 
@@ -13,7 +14,8 @@ public class DatabaseCleaner {
 
     private static final Class<?>[] ENTITY_TYPES = {
             User.class,
-            Tweet.class
+            Tweet.class,
+            Heart.class
     };
     private final EntityManager em;
 
