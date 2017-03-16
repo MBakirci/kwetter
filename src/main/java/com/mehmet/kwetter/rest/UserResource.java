@@ -24,7 +24,8 @@ public class UserResource {
     @Inject
     TweetService tweetService;
 
-    // READ OPERATIONS
+    //region CRUD OPERATIONS
+    //region READ OPERATIONS
     @GET
     public List<User> getAllUsers() {
         return userService.getUsers();
@@ -35,6 +36,7 @@ public class UserResource {
     public User getUser(@PathParam("id") Long id) {
         return userService.getUser(id);
     }
+    //endregion
 
     // CREATE OPERATION
     @POST
@@ -56,9 +58,9 @@ public class UserResource {
     public void deleteUser(User user) {
         userService.removeUser(user);
     }
+    //endregion
 
-
-    // Tweets by user
+    //region Tweets by user
     @GET
     @Path("{id}/tweets")
     public List<Tweet> getTweetsByUserId(@PathParam("id") Long id) {
@@ -70,9 +72,9 @@ public class UserResource {
     public List<Tweet> getRecentTweetsByUserId(@PathParam("id") Long id) {
         return tweetService.recentTweetsByUser(id);
     }
+    //endregion
 
-
-    // Followers
+    //region Followers
     @GET
     @Path("{id}/followers")
     public Set<User> getFollowers(@PathParam("id") Long id) {
@@ -92,6 +94,6 @@ public class UserResource {
     public void unFollow(List<User> users) {
         userService.unFollowUser(users.get(1).getId(), users.get(0).getId());
     }
-
+    //endregion
 
 }
