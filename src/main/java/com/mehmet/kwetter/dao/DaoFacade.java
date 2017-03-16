@@ -1,7 +1,6 @@
 package com.mehmet.kwetter.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 
 /**
@@ -16,37 +15,31 @@ public abstract class DaoFacade<T> implements IDao<T> {
         this.type = entityClass;
     }
 
-    @PersistenceContext
-    protected EntityManager em;
-
-    @Override
-    public EntityManager getEm() {
-        return em;
-    }
+    protected abstract EntityManager getEntityManager();
 
     @Override
     public void setEm(EntityManager em) {
-        this.em = em;
+        em = getEntityManager();
     }
 
     @Override
     public T find(final Object id) {
-        return (T) em.find(type, id);
+        return (T) getEntityManager().find(type, id);
     }
 
     @Override
     public T create(final T t) {
-        this.em.persist(t);
+        this.getEntityManager().persist(t);
         return t;
     }
 
     @Override
     public T update(final T t) {
-        return em.merge(t);
+        return getEntityManager().merge(t);
     }
 
     @Override
     public void delete(final Object id) {
-        em.remove(this.em.getReference(type, id));
+        getEntityManager().remove(this.getEntityManager().getReference(type, id));
     }
 }

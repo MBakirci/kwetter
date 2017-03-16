@@ -1,5 +1,8 @@
 package com.mehmet.kwetter.rest;
 
+import com.mehmet.kwetter.exception.TweetNotFoundException;
+import com.mehmet.kwetter.exception.UserAlreadyExcistException;
+import com.mehmet.kwetter.exception.UserNotFoundException;
 import com.mehmet.kwetter.model.Tweet;
 import com.mehmet.kwetter.service.TweetService;
 
@@ -27,28 +30,28 @@ public class TweetResource {
 
     @GET
     @Path("{id}")
-    public Tweet getTweetById(@PathParam("id") Long id) {
+    public Tweet getTweetById(@PathParam("id") Long id) throws UserNotFoundException, TweetNotFoundException {
         return tweetService.getTweetById(id);
     }
 
     // CREATE OPERATION
     @POST
     @Consumes("application/json")
-    public void createTweet(Tweet tweet) {
+    public void createTweet(Tweet tweet) throws UserAlreadyExcistException {
         tweetService.createTweet(tweet);
     }
 
     // UPDATE OPERATION
     @PUT
     @Consumes("application/json")
-    public void updateTweet(Tweet tweet) {
+    public void updateTweet(Tweet tweet) throws UserNotFoundException {
         tweetService.updateTweet(tweet);
     }
 
     // DELETE OPERATION
     @DELETE
     @Consumes("application/json")
-    public void deleteTweet(Tweet tweet) {
+    public void deleteTweet(Tweet tweet) throws UserNotFoundException, TweetNotFoundException {
         tweetService.removeTweet(tweet);
     }
 

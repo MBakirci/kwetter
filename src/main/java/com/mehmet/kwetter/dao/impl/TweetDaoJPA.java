@@ -7,17 +7,28 @@ import com.mehmet.kwetter.model.Tweet;
 import com.mehmet.kwetter.model.User;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
  * Created by Mehmet on 3/1/2017.
  */
 @Stateless
+@Default
 public class TweetDaoJPA extends DaoFacade<Tweet> implements TweetDao {
 
     public TweetDaoJPA() {
         super(Tweet.class);
+    }
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
     @Override
@@ -32,7 +43,7 @@ public class TweetDaoJPA extends DaoFacade<Tweet> implements TweetDao {
 
     @Override
     public void likeTweet(Tweet tweet, User liker) {
-        em.persist(new Heart(tweet,liker));
+        tweet.addHeart(new Heart(tweet,liker));
     }
 
     @Override

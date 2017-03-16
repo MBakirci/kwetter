@@ -124,25 +124,31 @@ public class TweetDaoTest {
     @Test
     public void likeTweet() throws Exception {
         //AddHeart
-        Integer expectedResult = 1;
+        Integer expectedResult = 2;
         User user = new User("Mehmet", "null", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""));
+        User user1 = new User("Mehmet1", "null", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""));
         Tweet tweet = new Tweet("testTweet",user);
+
+
         tx.begin();
         userDao.create(user);
+        userDao.create(user1);
         tweetDao.create(tweet);
         tx.commit();
-        tx.begin();
-        int aantal = tweetDao.findAll().size();
-        tx.commit();
-        assertThat(aantal, is(expectedResult));
+
         tx.begin();
         //Like tweet
         tweetDao.likeTweet(tweet,user);
+        tweetDao.likeTweet(tweet,user1);
         tx.commit();
+
         tx.begin();
-        Tweet tweet1 = tweetDao.find(tweet.getId());
+        List<Tweet> tweets = tweetDao.findAll();
         tx.commit();
-        assertThat(tweet1.getHearts().size(),is(1));
+
+        int aantal = tweets.size();
+        assertThat(aantal, is(1));
+        assertThat(tweets.get(0).getHearts().size(),is(expectedResult));
     }
 
     @Test

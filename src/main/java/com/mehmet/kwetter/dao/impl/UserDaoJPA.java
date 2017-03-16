@@ -7,6 +7,7 @@ import com.mehmet.kwetter.model.User;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -18,6 +19,14 @@ public class UserDaoJPA extends DaoFacade<User> implements UserDao {
 
     public UserDaoJPA() {
         super(User.class);
+    }
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
     @Override
