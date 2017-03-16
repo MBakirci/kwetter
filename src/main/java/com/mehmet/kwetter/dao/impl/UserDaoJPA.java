@@ -2,7 +2,7 @@ package com.mehmet.kwetter.dao.impl;
 
 import com.mehmet.kwetter.dao.DaoFacade;
 import com.mehmet.kwetter.dao.UserDao;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;

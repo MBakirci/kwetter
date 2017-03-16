@@ -1,11 +1,7 @@
-package com.mehmet.kwetter.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Mehmet on 3/14/2017.

@@ -1,8 +1,8 @@
 package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.dao.UserDao;
-import com.mehmet.kwetter.model.User;
-import com.mehmet.kwetter.model.UserDetail;
+import com.mehmet.kwetter.domain.User;
+import com.mehmet.kwetter.domain.UserDetail;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,9 +2,9 @@ package com.mehmet.kwetter.dao.impl;
 
 import com.mehmet.kwetter.dao.DaoFacade;
 import com.mehmet.kwetter.dao.TweetDao;
-import com.mehmet.kwetter.model.Heart;
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.Heart;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;

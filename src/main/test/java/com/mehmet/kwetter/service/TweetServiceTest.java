@@ -1,8 +1,8 @@
 package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.dao.TweetDao;
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

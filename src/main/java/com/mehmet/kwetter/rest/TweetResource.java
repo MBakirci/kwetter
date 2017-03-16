@@ -3,7 +3,7 @@ package com.mehmet.kwetter.rest;
 import com.mehmet.kwetter.exception.TweetNotFoundException;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
-import com.mehmet.kwetter.model.Tweet;
+import com.mehmet.kwetter.domain.Tweet;
 import com.mehmet.kwetter.service.TweetService;
 
 import javax.inject.Inject;

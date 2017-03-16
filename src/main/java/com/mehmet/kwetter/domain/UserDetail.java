@@ -1,4 +1,4 @@
-package com.mehmet.kwetter.model;
+package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

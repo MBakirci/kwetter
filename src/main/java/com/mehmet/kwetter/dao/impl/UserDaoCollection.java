@@ -4,7 +4,7 @@ import com.mehmet.kwetter.dao.Collection;
 import com.mehmet.kwetter.dao.UserDao;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

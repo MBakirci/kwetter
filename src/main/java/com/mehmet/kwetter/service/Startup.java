@@ -2,9 +2,9 @@ package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
-import com.mehmet.kwetter.model.UserDetail;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
+import com.mehmet.kwetter.domain.UserDetail;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;

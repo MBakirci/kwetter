@@ -1,7 +1,7 @@
 package com.mehmet.kwetter.dao;
 
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package com.mehmet.kwetter.dao;
 
 import com.mehmet.kwetter.dao.impl.TweetDaoJPA;
 import com.mehmet.kwetter.dao.impl.UserDaoJPA;
-import com.mehmet.kwetter.model.Tweet;
-import com.mehmet.kwetter.model.User;
-import com.mehmet.kwetter.model.UserDetail;
+import com.mehmet.kwetter.domain.Tweet;
+import com.mehmet.kwetter.domain.User;
+import com.mehmet.kwetter.domain.UserDetail;
 import com.mehmet.kwetter.service.TweetServiceTest;
 import com.mehmet.kwetter.util.DatabaseCleaner;
 import org.junit.After;

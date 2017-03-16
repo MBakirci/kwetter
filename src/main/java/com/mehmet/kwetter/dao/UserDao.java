@@ -1,7 +1,7 @@
 package com.mehmet.kwetter.dao;
 
 import com.mehmet.kwetter.exception.UserNotFoundException;
-import com.mehmet.kwetter.model.User;
+import com.mehmet.kwetter.domain.User;
 
 /**
  * Created by Mehmet on 3/10/2017.
