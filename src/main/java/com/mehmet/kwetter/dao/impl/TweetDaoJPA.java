@@ -14,15 +14,15 @@ import java.util.List;
  * Created by Mehmet on 3/1/2017.
  */
 @Stateless
-public class TweetDaoImpl extends DaoFacade<Tweet> implements TweetDao {
+public class TweetDaoJPA extends DaoFacade<Tweet> implements TweetDao {
 
-    public TweetDaoImpl() {
+    public TweetDaoJPA() {
         super(Tweet.class);
     }
 
     @Override
     public List<Tweet> findAll() {
-        return null;
+        return em.createNamedQuery("Tweet.findAll").getResultList();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TweetDaoImpl extends DaoFacade<Tweet> implements TweetDao {
     }
 
     @Override
-    public void LikeTweet(Tweet tweet, User liker) {
+    public void likeTweet(Tweet tweet, User liker) {
         em.persist(new Heart(tweet,liker));
     }
 

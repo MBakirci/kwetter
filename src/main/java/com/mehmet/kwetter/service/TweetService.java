@@ -45,7 +45,7 @@ public class TweetService {
     }
 
     public void likeTweet(Tweet tweet, User liker) {
-        tweetDao.LikeTweet(tweet, liker);
+        tweetDao.likeTweet(tweet, liker);
     }
 
     public List<Tweet> tweetsByUser(Long userId) {

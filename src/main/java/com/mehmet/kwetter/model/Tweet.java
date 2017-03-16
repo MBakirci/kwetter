@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -15,9 +16,10 @@ import java.util.*;
  */
 @Entity
 @NamedQueries({
+        @NamedQuery(name = "Tweet.findAll", query = "SELECT k FROM Tweet k "),
         @NamedQuery(name = "Tweet.findByUserId", query = "SELECT k FROM Tweet k WHERE k.user.id = :userId ORDER BY k.date DESC"),
 })
-public class Tweet {
+public class Tweet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

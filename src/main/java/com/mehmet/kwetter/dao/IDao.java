@@ -42,5 +42,7 @@ public interface IDao<T> {
      */
     void delete(Object t);
 
+    EntityManager getEm();
+
     void setEm(EntityManager em);
 }

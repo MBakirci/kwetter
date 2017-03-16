@@ -1,10 +1,8 @@
 package com.mehmet.kwetter.util;
 
 
-import com.mehmet.kwetter.model.Heart;
 import com.mehmet.kwetter.model.Tweet;
 import com.mehmet.kwetter.model.User;
-import com.mehmet.kwetter.model.UserDetail;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.EntityType;
@@ -15,9 +13,7 @@ public class DatabaseCleaner {
 
     private static final Class<?>[] ENTITY_TYPES = {
             User.class,
-            UserDetail.class,
-            Tweet.class,
-            Heart.class
+            Tweet.class
     };
     private final EntityManager em;
 

@@ -2,8 +2,6 @@ package com.mehmet.kwetter.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.Map;
 
 
 /**
@@ -20,6 +18,16 @@ public abstract class DaoFacade<T> implements IDao<T> {
 
     @PersistenceContext
     protected EntityManager em;
+
+    @Override
+    public EntityManager getEm() {
+        return em;
+    }
+
+    @Override
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
 
     @Override
     public T find(final Object id) {
