@@ -30,7 +30,7 @@ public class TweetDaoCollection implements TweetDao {
     @Override
     public Tweet find(Object id) throws TweetNotFoundException {
         for (Tweet tweet : tweets) {
-            if (tweet.getId() == (Long) id) {
+            if (tweet.getId() == id) {
                 return tweet;
             }
         }

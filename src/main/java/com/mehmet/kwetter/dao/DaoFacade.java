@@ -24,7 +24,7 @@ public abstract class DaoFacade<T> implements IDao<T> {
 
     @Override
     public T find(final Object id) {
-        return (T) getEntityManager().find(type, id);
+        return getEntityManager().find(type, id);
     }
 
     @Override
