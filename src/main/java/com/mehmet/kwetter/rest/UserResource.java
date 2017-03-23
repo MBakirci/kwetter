@@ -7,6 +7,7 @@ import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
 import com.mehmet.kwetter.service.TweetService;
 import com.mehmet.kwetter.service.UserService;
+import io.swagger.annotations.Api;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -19,6 +20,7 @@ import java.util.Set;
 
 @Path("user")
 @Produces("application/json")
+@Api(value = "user")
 public class UserResource {
 
     @Inject

@@ -91,7 +91,11 @@
             <version>2.22.2</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.shipstone</groupId>
+            <artifactId>swagger-ui-integration</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>kwetter</finalName>
