@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Kwetter</title>
+    <meta name="author" content="Mehmet Bakirci"></meta>
+    <style>
+        body {
+            background-color: azure;
+        }
+    </style>
+</h:head>
+<h:body style="padding: 60px;">
+    <b:navBar brand="Kwetter" brandHref="#" fixed="top" inverse="true">
+        <b:navbarLinks>
+            <b:navLink value="Home" outcome="index.xhtml"></b:navLink>
+            <b:navLink value="Profile" outcome="profile.xhtml"></b:navLink>
+        </b:navbarLinks>
+        <b:navbarLinks pull="right">
+            <b:navLink value="Sign out" outcome="login.xhtml"></b:navLink>
+        </b:navbarLinks>
+    </b:navBar>
+
+    <b:container>
+        <b:row>
+            <b:column span="12">
+                <b:panel collapsible="false">
+                    <f:facet name="heading">
+                        <h:outputText value="What is happening? "/>
+                        <h:form styleClass="form">
+                            <div class="form-group">
+                                <b:inputText placeholder="Search..." fieldSize="sm"/>
+                                <b:button value="Search "/>
+                            </div>
+                        </h:form>
+                    </f:facet>
+                    <b:column span="12">
+                        <b:column span="6">
+                            <b:tabView>
+                                <b:tab title="Time Line">
+                                    <p>This is the first tab.</p>
+                                </b:tab>
+                                <b:tab title="@Mentions">
+                                    <p>This is the second tab.</p>
+                                </b:tab>
+                            </b:tabView>
+                        </b:column>
+                        <b:column span="6">
+                            <b:column span="12">
+                                <b:panel>
+                                    <f:facet name="heading">
+                                        <h:outputText value="Your tweets "/>
+                                    </f:facet>
+                                </b:panel>
+                            </b:column>
+
+                            <b:column span="6">
+                                <b:panel>
+                                    <f:facet name="heading">
+                                        <h:outputText value="Following "/>
+                                    </f:facet>
+                                </b:panel>
+                            </b:column>
+                            <b:column span="6">
+                                <b:panel>
+                                    <f:facet name="heading">
+                                        <h:outputText value="Followers "/>
+                                    </f:facet>
+                                </b:panel>
+                            </b:column>
+                            <b:column span="12">
+                                <b:panel>
+                                    <f:facet name="heading">
+                                        <h:outputText value="Trends "/>
+                                    </f:facet>
+                                </b:panel>
+                            </b:column>
+                        </b:column>
+                    </b:column>
+                </b:panel>
+            </b:column>
+        </b:row>
+    </b:container>
+</h:body>
+</html>

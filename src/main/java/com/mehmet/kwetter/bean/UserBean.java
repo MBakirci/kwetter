@@ -1,6 +1,9 @@
 package com.mehmet.kwetter.bean;
 
+import com.mehmet.kwetter.domain.User;
 import com.mehmet.kwetter.domain.UserDetail;
+import com.mehmet.kwetter.exception.TweetNotFoundException;
+import com.mehmet.kwetter.exception.UserNotFoundException;
 import com.mehmet.kwetter.service.UserService;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,12 +19,27 @@ public class UserBean {
 
     @Inject
     private UserService userService;
-
-
-
+    private User user;
     private String userName;
-    private String profilePicLocation;
-    private UserDetail userDetails;
 
-    private String filter;
+    public User getUser(Long id) throws UserNotFoundException, TweetNotFoundException {
+        return user;
+    }
+
+    public void loadUser() throws UserNotFoundException {
+        User u = userService.getUser(userName);
+        this.setUser(u);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }
