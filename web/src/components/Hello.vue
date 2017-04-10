@@ -34,7 +34,7 @@
     methods: {
       getRandom() {
         this.$http
-          .get('posts')
+          .get('user')
           .then((response) => { console.log(response); });
       },
     },
