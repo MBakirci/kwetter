@@ -7,6 +7,8 @@ import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
 import com.mehmet.kwetter.domain.User;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
@@ -24,6 +26,15 @@ public class UserService {
     private TweetDao tweetDao;
 
     public UserService() {
+    }
+
+
+    @Resource
+    private SessionContext context;
+
+    public User getLoggedUser() throws UserNotFoundException {
+        String username = context.getCallerPrincipal().getName();
+        return this.getUser(username);
     }
 
     public void setUserDao(UserDao userDao) {

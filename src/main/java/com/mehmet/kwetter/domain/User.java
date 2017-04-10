@@ -26,6 +26,8 @@ public class User {
     @Column(unique=true)
     private String username;
     private String profilePicUrl;
+    private String password;
+    private RoleEnum role;
 
     private UserDetail userdetail;
 
@@ -49,10 +51,12 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String profilePicUrl, UserDetail userDetail) {
-        this.username = userName;
+    public User(String username, String profilePicUrl, UserDetail userDetail, String password) {
+        this.username = username;
         this.profilePicUrl = profilePicUrl;
         this.userdetail = userDetail;
+        this.password = password;
+        this.role = RoleEnum.USER;
     }
 
     public long getId() {
@@ -135,5 +139,22 @@ public class User {
     public void removeFollower(User follower) {
         followers.remove(follower);
         follower.following.remove(this);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public RoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEnum role) {
+        role = role;
     }
 }

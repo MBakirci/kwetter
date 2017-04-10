@@ -34,7 +34,7 @@ public class Startup {
         List<Tweet> tweets = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
-            users.add(new User("Mehmet" + i, "geen locatie", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", "")));
+            users.add(new User("Mehmet" + i, "geen locatie", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""),"password"));
         }
 
         for (User user : users) {
