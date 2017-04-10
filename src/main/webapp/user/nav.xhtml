@@ -1,0 +1,26 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:b="http://bootsfaces.net/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <b:navBar brand="Kwetter" brandHref="home.xhtml" position="top" sticky="true">
+
+        <h:form styleClass="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <h:inputText binding="#{inputSearch}" />
+                <h:commandButton value="Search" action="#{userBean.searchUser(inputSearch.value)}" />
+            </div>
+        </h:form>
+        <b:navbarLinks>
+            <b:dropMenu value="#{userBean.user.username}">
+                <b:navLink value="Profile" outcome="profile.xhtml"></b:navLink>
+                <b:navLink></b:navLink>
+                <h:form><b:navCommandLink value="Logout"  action="#{userBean.logout}"></b:navCommandLink></h:form>
+
+            </b:dropMenu>
+        </b:navbarLinks>
+    </b:navBar>
+
+</ui:composition>

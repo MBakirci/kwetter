@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Kwetter Log In</title>
+    <style type="text/css">
+        .pagecontainer {
+            margin-top: 60px;
+        }
+
+        .tweet {
+            width: 100%;
+            padding-left: 20px;
+            padding-top: 10px;
+            border: solid 1px grey;
+            border-width: 1px 1px 0 1px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <ui:include src="nav.xhtml" />
+    <b:container styleClass="pagecontainer">
+
+    <b:row>
+        <b:column col-md="12">
+            <b:container>
+                <b:image value="http://lorempixel.com/200/200/people/" width="200px" height="200px" />
+            </b:container>
+            <b:row>
+                <div class="profilebar">
+                    <b:container>
+                        <b:column col-md="6" offset-md="3">
+                            <b:row>
+
+                            </b:row>
+                        </b:column>
+                    </b:container>
+
+                </div>
+            </b:row>
+        </b:column>
+    </b:row>
+        <b:row>
+            <b:column col-md="12">
+                <b:tabView activeIndex="0">
+                    <b:tab title="Tweets #{userBean.tweetsamount}">
+                        <ui:repeat var="tweet" value="#{userBean.recenttweets}">
+
+                            <div class="tweet">
+                                <b:row>
+                                    <b:column col-md="1" style="padding-left: 5px;">
+                                        <b:image value="http://lorempixel.com/200/200/people/" width="50px" height="50px" />
+                                    </b:column>
+                                    <b:column col-md="9">
+                                        @#{tweet.user.username} - #{tweet.timeAgo}
+                                        <br></br>
+                                        #{tweet.tweet}
+                                    </b:column>
+                                    <h:form>
+                                        <b:icon name="heart" />  #{userBean.heartsamount}<br/>
+                                    </h:form>
+                                </b:row>
+                            </div>
+                        </ui:repeat>
+                    </b:tab>
+                    <b:tab title="Following #{userBean.followingamount}">
+                        <ui:repeat var="user" value="#{userBean.following}">
+
+                            <b:column col-md="3">
+                                <div class="profilebox">
+                                    <div class="banner">
+                                    </div>
+                                    <b:image styleClass="profilepic2" value="http://lorempixel.com/200/200/people/" width="200px" height="200px" />
+                                    <b:row>
+                                        <b:column col-sm="6" offset="4" style="margin-top: 9px;">
+                                            <strong>#{user.handle}</strong>
+                                            <br></br>
+                                            @#{user.handle}
+                                        </b:column>
+                                    </b:row>
+                                    <b:row>
+                                        <b:column col-md="3" style="margin-left: 10px;">
+                                            <h6>Tweets
+                                                <br></br>
+                                                #{userBean.tweetsamount}
+                                            </h6>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <h6>Followers
+                                                <br></br>
+                                                #{userBean.followersamount}
+                                            </h6>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <h6>Following
+                                                <br></br>
+                                                #{userBean.followingamount}
+                                            </h6>
+                                        </b:column>
+
+                                    </b:row>
+                                </div>
+                            </b:column>
+                        </ui:repeat>
+                    </b:tab>
+                    <b:tab title="Followers #{userBean.followersamount}">
+                        <ui:repeat var="user" value="#{userBean.followers}">
+
+                            <b:column col-md="3">
+                                <div class="profilebox">
+                                    <b:image value="http://lorempixel.com/200/200/people/" width="200px" height="200px" />
+                                    <b:row>
+                                        <b:column col-sm="6" offset="4" style="margin-top: 9px;">
+                                            <strong>#{user.username}</strong>
+                                            <br></br>
+                                            @#{user.username}
+                                        </b:column>
+                                    </b:row>
+                                    <b:row>
+                                        <b:column col-md="3" style="margin-left: 10px;">
+                                            <h6>Tweets
+                                                <br></br>
+                                                #{userBean.tweetsamount}
+                                            </h6>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <h6>Followers
+                                                <br></br>
+                                                #{userBean.followersamount}
+                                            </h6>
+                                        </b:column>
+                                        <b:column col-md="3">
+                                            <h6>Following
+                                                <br></br>
+                                                #{userBean.followingamount}
+                                            </h6>
+                                        </b:column>
+
+                                    </b:row>
+                                </div>
+                            </b:column>
+                        </ui:repeat>
+                    </b:tab>
+                </b:tabView>
+            </b:column>
+        </b:row>
+
+    </b:container>
+</h:body>
+</html>

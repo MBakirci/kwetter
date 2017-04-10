@@ -11,6 +11,8 @@ import com.mehmet.kwetter.service.TweetService;
 import com.mehmet.kwetter.service.UserService;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -20,8 +22,8 @@ import java.util.*;
 /**
  * Created by Mehmet on 2/4/2017.
  */
-@Named(value = "userBean")
-@RequestScoped
+@ManagedBean(name = "userBean")
+@SessionScoped
 public class UserBean {
 
     @Inject
@@ -43,6 +45,9 @@ public class UserBean {
 
     private ArrayList<User> following;
     private ArrayList<User> followers;
+
+
+    private ArrayList<User> filter;
 
     public User getUser() throws UserNotFoundException {
         if (user == null) {
@@ -84,12 +89,12 @@ public class UserBean {
     public String register(String username, String password) throws UserAlreadyExcistException {
         User d = new User(username,null,null,password);
         userService.createUser(d);
-        return "/home.xhtml?faces-redirect=true";
+        return "/login.xhtml?faces-redirect=true";
     }
 
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/home.xhtml?faces-redirect=true";
+        return "/login.xhtml?faces-redirect=true";
     }
 
     public String createTweet() throws UserAlreadyExcistException {
@@ -189,5 +194,25 @@ public class UserBean {
 
     public void setFollowers(ArrayList<User> followers) {
         this.followers = followers;
+    }
+
+    public String searchUser(String username){
+        ArrayList<User> users = new ArrayList<>();
+        for (User u: userService.getUsers()) {
+            if(u.getUsername().toLowerCase().contains(username.toLowerCase())) {
+                users.add(u);
+            }
+        }
+        this.filter = users;
+        return "/user/searchResults.xhtml?faces-redirect=true";
+    }
+
+
+    public ArrayList<User> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(ArrayList<User> filter) {
+        this.filter = filter;
     }
 }

@@ -11,26 +11,27 @@
 <h:body>
     <b:container>
         <h1>KWETTER</h1>
-        <h:form id="loginForm" onsubmit="document.getElementById('loginForm').action='j_security_check';" method="post" prependId="false">
+
+        <h:form id="loginForm" method="post" prependId="false">
             <b:container layout="fluid" style="margin-top:100px;">
                 <b:row>
                     <b:column medium-screen="3">
                     </b:column>
                     <b:column medium-screen="6">
                         <b:panelGrid colSpans="12,0" id="stateGridId">
-                            <b:panel title="Login" look="primary">
+                            <b:panel title="Register" look="primary">
                                 <b:row>
                                     <b:column medium-screen="12">
                                         <b:message for="username" />
                                         <b:message for="password" />
-                                        <b:message for="loginButton" />
+                                        <b:message for="registerButton" />
                                         <br />
                                     </b:column>
                                 </b:row>
                                 <b:row>
                                     <b:column offset="2" medium-screen="8">
-                                        <b:inputText placeholder="Username" required="true"
-                                                     id="username" name="j_username" requiredMessage="required">
+                                        <b:inputText placeholder="username" required="true"
+                                                     id="username" binding="#{input2}" name="j_username" requiredMessage="required">
                                             <f:facet name="prepend">
                                                 <b:icon name="user" />
                                             </f:facet>
@@ -39,8 +40,8 @@
                                 </b:row>
                                 <b:row>
                                     <b:column offset="2" medium-screen="8">
-                                        <b:inputSecret placeholder="Password" required="true"
-                                                       id="password" name="j_password" requiredMessage="required">
+                                        <b:inputSecret placeholder="password" required="true"
+                                                       id="password" binding="#{input1}" name="j_password" requiredMessage="required">
                                             <f:facet name="prepend">
                                                 <b:iconAwesome name="key" />
                                             </f:facet>
@@ -49,15 +50,14 @@
                                 </b:row>
                                 <b:row>
                                     <b:column offset="2" span="4">
-                                        <b:commandButton id="loginButton" value="Log In"
+                                        <b:commandButton id="registerButton" value="Register" action="#{userBean.register(input2.value, input1.value)}"
                                                          look="primary" ajax="false" style="width:100%" />
-                                    </b:column>
-                                    <b:column offset="2" span="4">
-                                        <a href="register.xhtml">Not an account? Register here.</a>
                                     </b:column>
                                 </b:row>
                             </b:panel>
                         </b:panelGrid>
+                    </b:column>
+                    <b:column medium-screen="3">
                     </b:column>
                 </b:row>
             </b:container>

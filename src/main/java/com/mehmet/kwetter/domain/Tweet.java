@@ -1,5 +1,7 @@
 package com.mehmet.kwetter.domain;
 
+import com.ocpsoft.pretty.time.PrettyTime;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -23,6 +25,10 @@ public class Tweet implements Serializable {
 
     @Transient
     private String dateString;
+
+    @Transient
+    private String timeAgo;
+
 
     @OneToMany(mappedBy = "tweet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Heart> hearts = new HashSet<>();
@@ -99,5 +105,15 @@ public class Tweet implements Serializable {
 
     public void addHeart(Heart heart) {
         hearts.add(heart);
+    }
+
+
+    public String getTimeAgo() {
+        PrettyTime p = new PrettyTime();
+        return p.format(this.date.getTime());
+    }
+
+    public void setTimeAgo(String timeAgo) {
+        this.timeAgo = timeAgo;
     }
 }
