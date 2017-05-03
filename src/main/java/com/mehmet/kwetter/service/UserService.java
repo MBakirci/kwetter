@@ -2,10 +2,10 @@ package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.dao.TweetDao;
 import com.mehmet.kwetter.dao.UserDao;
+import com.mehmet.kwetter.domain.User;
 import com.mehmet.kwetter.exception.TweetNotFoundException;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
-import com.mehmet.kwetter.domain.User;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -74,4 +74,9 @@ public class UserService {
         userDao.unFollowUser(followerId, toFollowId);
     }
 
+    public void setActivate(User user, boolean activate, String activationCode) {
+        if (user.getActivationCode().equals(activationCode)) {
+            userDao.setActivate(user, activate);
+        }
+    }
 }

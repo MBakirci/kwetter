@@ -1,16 +1,20 @@
 package com.mehmet.kwetter.rest;
 
+import com.mehmet.kwetter.dao.Secured;
+import com.mehmet.kwetter.domain.RoleEnum;
 import com.mehmet.kwetter.domain.Tweet;
 import com.mehmet.kwetter.domain.User;
 import com.mehmet.kwetter.exception.TweetNotFoundException;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
+import com.mehmet.kwetter.service.MailService;
 import com.mehmet.kwetter.service.TweetService;
 import com.mehmet.kwetter.service.UserService;
 import io.swagger.annotations.Api;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Set;
 
@@ -27,11 +31,15 @@ public class UserResource {
     UserService userService;
 
     @Inject
+    MailService mailService;
+
+    @Inject
     TweetService tweetService;
 
     //region CRUD OPERATIONS
     //region READ OPERATIONS
     @GET
+    @Secured({RoleEnum.ADMIN})
     public List<User> getAllUsers() {
         return userService.getUsers();
     }
@@ -46,8 +54,17 @@ public class UserResource {
     // CREATE OPERATION
     @POST
     @Consumes("application/json")
-    public void createUser(User user) throws UserAlreadyExcistException {
+    public void createUser(User user) throws UserAlreadyExcistException, UserNotFoundException, TweetNotFoundException {
         userService.createUser(user);
+        String url = "http://localhost:8080/kwetter/api/user/" + user.getId() + "/" + user.getActivationCode();
+        mailService.send("mbakirci94@gmail.com","Welcome to Kwetter", url);
+    }
+
+    @GET
+    @Path("{id}/{activationCode}")
+    public Response activateUser(@PathParam("id") Long id, @PathParam("activationCode") String code) throws UserNotFoundException, TweetNotFoundException {
+        userService.setActivate(userService.getUser(id),true, code);
+        return Response.ok().build();
     }
 
     // UPDATE OPERATION

@@ -41,6 +41,12 @@ public class Startup {
             userService.createUser(user);
         }
 
+
+        for (int i = 0; i < 10; i++) {
+            userService.setActivate(users.get(i),true, users.get(i).getActivationCode());
+        }
+
+
         for (int i = 0; i < 20; i++) {
             tweets.add(new Tweet("Hallo" + i, new GregorianCalendar(2017, 2, 14, 10, 10, i), users.get(i)));
         }

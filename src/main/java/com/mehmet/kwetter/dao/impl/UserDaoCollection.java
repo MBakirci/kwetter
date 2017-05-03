@@ -2,6 +2,7 @@ package com.mehmet.kwetter.dao.impl;
 
 import com.mehmet.kwetter.dao.Collection;
 import com.mehmet.kwetter.dao.UserDao;
+import com.mehmet.kwetter.domain.RoleEnum;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
 import com.mehmet.kwetter.domain.User;
@@ -33,6 +34,21 @@ public class UserDaoCollection implements UserDao {
             }
         }
         throw new UserNotFoundException();
+    }
+
+    @Override
+    public RoleEnum getUserPermission(String username) {
+        try {
+            return findByUsername(username).getRole();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void setActivate(User user, boolean activate) {
+
     }
 
     @Override

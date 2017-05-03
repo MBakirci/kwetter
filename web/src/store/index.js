@@ -4,9 +4,14 @@ import Vuex from 'vuex';
 vue.use(Vuex);
 
 const store = new Vuex.Store({
-  root: process.env.API_URL,
-  searchValue: '',
-  modules: {},
+  state: {
+    user: '',
+  },
+  mutations: {
+    login(loggeduser) {
+      this.state.user = loggeduser;
+    },
+  },
 });
 
 export default store;

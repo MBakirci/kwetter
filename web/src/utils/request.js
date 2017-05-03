@@ -19,7 +19,7 @@ export default {
       data,
       timeout: 30000,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
   },

@@ -1,5 +1,6 @@
 package com.mehmet.kwetter.dao;
 
+import com.mehmet.kwetter.domain.RoleEnum;
 import com.mehmet.kwetter.domain.User;
 import com.mehmet.kwetter.exception.UserNotFoundException;
 
@@ -28,4 +29,8 @@ public interface UserDao extends IDao<User> {
      * @throws UserNotFoundException
      */
     User findByUsername(String username) throws UserNotFoundException;
+
+    RoleEnum getUserPermission(String username);
+
+    void setActivate(User user, boolean activate);
 }

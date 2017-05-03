@@ -2,6 +2,8 @@ package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +41,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Heart> hearts;
 
+    private String activationCode;
+    private boolean activated;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(
             name = "follower",
@@ -51,6 +56,8 @@ public class User {
     private Set<User> following = new HashSet<>();
 
     public User() {
+        this.role = RoleEnum.USER;
+        this.activationCode = new BigInteger(130, new SecureRandom()).toString(32);
     }
 
     public User(String username, String profilePicUrl, UserDetail userDetail, String password) {
@@ -59,6 +66,8 @@ public class User {
         this.userdetail = userDetail;
         this.password = password;
         this.role = RoleEnum.USER;
+        this.activationCode = new BigInteger(130, new SecureRandom()).toString(32);
+        this.activated = false;
     }
 
     public long getId() {
@@ -158,5 +167,21 @@ public class User {
 
     public void setRole(RoleEnum role) {
         role = role;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 }

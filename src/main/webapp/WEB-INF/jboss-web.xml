@@ -1,3 +1,8 @@
 <jboss-web>
+    <context-root>/kwetter</context-root>
+    <!--  does mapping to server  -->
+    <server-instance>default-server</server-instance>
+    <!--  does mapping to host inside server  -->
+    <virtual-host>default-host</virtual-host>
     <security-domain>kwetterapp</security-domain>
 </jboss-web>

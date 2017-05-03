@@ -2,6 +2,7 @@ package com.mehmet.kwetter.dao.impl;
 
 import com.mehmet.kwetter.dao.DaoFacade;
 import com.mehmet.kwetter.dao.UserDao;
+import com.mehmet.kwetter.domain.RoleEnum;
 import com.mehmet.kwetter.domain.User;
 
 import javax.ejb.Stateless;
@@ -37,6 +38,18 @@ public class UserDaoJPA extends DaoFacade<User> implements UserDao {
     @Override
     public User findByUsername(String username) {
         return (User) em.createNamedQuery("User.findByUsername").setParameter("username", username).getSingleResult();
+    }
+
+    @Override
+    public RoleEnum getUserPermission(String username) {
+        User user = (User) em.createNamedQuery("User.findByUsername").setParameter("username", username).getSingleResult();
+        return user.getRole();
+    }
+
+    @Override
+    public void setActivate(User user, boolean activate) {
+        user.setActivated(activate);
+        this.update(user);
     }
 
     @Override
