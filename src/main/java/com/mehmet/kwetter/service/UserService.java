@@ -8,10 +8,13 @@ import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
 
 import javax.annotation.Resource;
+import javax.batch.operations.JobOperator;
+import javax.batch.runtime.BatchRuntime;
 import javax.ejb.SessionContext;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by Mehmet on 3/1/2017.
@@ -78,5 +81,9 @@ public class UserService {
         if (user.getActivationCode().equals(activationCode)) {
             userDao.setActivate(user, activate);
         }
+    }
+
+    public void deleteNotActivated(User user) throws UserNotFoundException, TweetNotFoundException {
+        userDao.update(user);
     }
 }

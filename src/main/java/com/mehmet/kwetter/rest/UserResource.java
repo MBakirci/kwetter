@@ -12,10 +12,13 @@ import com.mehmet.kwetter.service.TweetService;
 import com.mehmet.kwetter.service.UserService;
 import io.swagger.annotations.Api;
 
+import javax.batch.operations.JobOperator;
+import javax.batch.runtime.BatchRuntime;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -42,6 +45,13 @@ public class UserResource {
     @Secured({RoleEnum.ADMIN})
     public List<User> getAllUsers() {
         return userService.getUsers();
+    }
+
+    @GET
+    @Path("{start}/run/job")
+    public void deleteNotActivatedUsers(@PathParam("start") String start) {
+        JobOperator jo = BatchRuntime.getJobOperator();
+        jo.start("deleteNotActivated", new Properties());
     }
 
     @GET

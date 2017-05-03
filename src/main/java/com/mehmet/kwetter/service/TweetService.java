@@ -1,6 +1,7 @@
 package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.dao.TweetDao;
+import com.mehmet.kwetter.dao.impl.TweetFaulLanguageInceptor;
 import com.mehmet.kwetter.exception.TweetNotFoundException;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
 import com.mehmet.kwetter.exception.UserNotFoundException;
@@ -9,6 +10,7 @@ import com.mehmet.kwetter.domain.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import java.util.List;
 
 /**
@@ -35,10 +37,12 @@ public class TweetService {
         return tweetDao.find(id);
     }
 
+    @Interceptors({TweetFaulLanguageInceptor.class})
     public void createTweet(Tweet tweet) throws UserAlreadyExcistException {
         tweetDao.create(tweet);
     }
 
+    @Interceptors({TweetFaulLanguageInceptor.class})
     public void updateTweet(Tweet tweet) throws UserNotFoundException {
         tweetDao.update(tweet);
     }

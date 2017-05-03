@@ -1,0 +1,9 @@
+<job id="deleteNotActivated" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <step id="deleteStep">
+        <chunk item-count="5">
+            <reader ref="deleteReader"></reader>
+            <processor ref="deleteProcessor"></processor>
+            <writer ref="deleteWriter"></writer>
+        </chunk>
+    </step>
+</job>

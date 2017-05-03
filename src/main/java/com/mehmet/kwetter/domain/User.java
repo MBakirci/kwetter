@@ -2,10 +2,10 @@ package com.mehmet.kwetter.domain;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Mehmet
@@ -13,13 +13,13 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "User.findAll",
-                query = "SELECT u FROM User u"),
+                query = "SELECT u FROM User u WHERE u.disabled = false"),
         @NamedQuery(name = "User.findById",
                 query = "SELECT u FROM User u WHERE u.id = :id"),
         @NamedQuery(name = "User.findByUsername",
                 query = "SELECT u FROM User u WHERE u.username = UPPER(:username)")
 })
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue
@@ -43,6 +43,8 @@ public class User {
 
     private String activationCode;
     private boolean activated;
+    private Date registerationDate;
+    private boolean disabled;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(
@@ -58,6 +60,7 @@ public class User {
     public User() {
         this.role = RoleEnum.USER;
         this.activationCode = new BigInteger(130, new SecureRandom()).toString(32);
+        this.registerationDate = new GregorianCalendar().getTime();
     }
 
     public User(String username, String profilePicUrl, UserDetail userDetail, String password) {
@@ -68,6 +71,7 @@ public class User {
         this.role = RoleEnum.USER;
         this.activationCode = new BigInteger(130, new SecureRandom()).toString(32);
         this.activated = false;
+        this.registerationDate = new GregorianCalendar(2017, Calendar.APRIL,1).getTime();
     }
 
     public long getId() {
@@ -183,5 +187,17 @@ public class User {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public Date getRegisterationDate() {
+        return registerationDate;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }
