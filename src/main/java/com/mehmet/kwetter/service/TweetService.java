@@ -38,8 +38,8 @@ public class TweetService {
     }
 
     @Interceptors({TweetFaulLanguageInceptor.class})
-    public void createTweet(Tweet tweet) throws UserAlreadyExcistException {
-        tweetDao.create(tweet);
+    public Tweet createTweet(Tweet tweet) throws UserAlreadyExcistException {
+       return tweetDao.create(tweet);
     }
 
     @Interceptors({TweetFaulLanguageInceptor.class})

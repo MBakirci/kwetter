@@ -41,8 +41,8 @@ public class TweetResource {
     // CREATE OPERATION
     @POST
     @Consumes("application/json")
-    public void createTweet(Tweet tweet) throws UserAlreadyExcistException {
-        tweetService.createTweet(tweet);
+    public Tweet createTweet(Tweet tweet) throws UserAlreadyExcistException {
+        return tweetService.createTweet(tweet);
     }
 
     // UPDATE OPERATION

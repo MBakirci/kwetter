@@ -37,12 +37,12 @@
             </div>
             <button class="btn btn-default" @click="search">Submit</button>
           </form>
-          <dropdown text="Action" type="primary">
+          <dropdown :text="username" type="primary">
             <li>
               <router-link to="/user/profile">Profile</router-link>
             </li>
             <li role="separator" class="divider"></li>
-            <li>
+            <li @click="logout()">
               <router-link to="/login">Logout</router-link>
             </li>
           </dropdown>
@@ -57,6 +57,7 @@
 
 <script>
   import { dropdown } from 'vue-strap';
+  import store from '@/store';
 
   export default {
     components: { dropdown },
@@ -66,6 +67,14 @@
       };
     },
     computed: {
+      username() {
+        return store.state.user.username;
+      },
+      logout() {
+        localStorage.removeItem('__token');
+        store.state.user = '';
+        store.state.tweets = {};
+      },
     },
     methods: {
       search() {

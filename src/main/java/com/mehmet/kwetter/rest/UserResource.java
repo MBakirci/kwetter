@@ -12,11 +12,16 @@ import com.mehmet.kwetter.service.TweetService;
 import com.mehmet.kwetter.service.UserService;
 import io.swagger.annotations.Api;
 
+import javax.annotation.PostConstruct;
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
 import javax.inject.Inject;
+import javax.management.relation.Role;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -38,6 +43,30 @@ public class UserResource {
 
     @Inject
     TweetService tweetService;
+
+    private User user;
+
+    @Context
+    SecurityContext securityContext;
+
+    @PostConstruct
+    public void postcontruct(){
+        try {
+            Principal principal = securityContext.getUserPrincipal();
+            String username = principal.getName();
+            user = userService.getUser(username);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @GET
+    @Path("{currentuser}")
+    @Secured({RoleEnum.ADMIN, RoleEnum.USER})
+    public User getCurrentUser() {
+        return user;
+    }
+
 
     //region CRUD OPERATIONS
     //region READ OPERATIONS

@@ -11,13 +11,13 @@
             <div class="form-group">
               <label for="usernameInput" class="col-lg-2 control-label">Username</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" v-model="credentials.username" id="usernameInput" name="j_username" placeholder="Username">
+                <input type="text" class="form-control" v-model="credentials.username" id="usernameInput" placeholder="Username">
               </div>
             </div>
             <div class="form-group">
               <label for="inputPassword" class="col-lg-2 control-label">Password</label>
               <div class="col-lg-10">
-                <input type="password" class="form-control" v-model="credentials.password" id="inputPassword" name="j_password" placeholder="Password">
+                <input type="password" class="form-control" v-model="credentials.password" id="inputPassword" placeholder="Password">
               </div>
             </div>
             <div class="form-group">
@@ -55,16 +55,13 @@
     },
     methods: {
       login() {
-        const formData = new FormData();
-        formData.append('foo', 'bar');
-        this.$http.post('j_security_check', formData).then((response) => {
-          console.log(response);
+        this.$http.post('api/auth', this.credentials).then((response) => {
+          localStorage.setItem('__token', response.data.token);
+          this.$router.push({ name: 'Home' });
         }).catch((error) => {
           self.$Message.error(error, 30);
         });
       },
-    },
-    mounted: {
     },
   };
 

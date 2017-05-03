@@ -14,22 +14,22 @@
   <div>
     <div class="col-md-12">
       <div class="col-md-12">
-        <strong>Mehmet0</strong>
+        <strong>{{user.username}}</strong>
         <br/>
-        <img src="http://lorempixel.com/200/200/people/" width="200px" height="200px" alt="">
+        <img v-if="user" src="http://lorempixel.com/200/200/people/" width="200px" height="200px" alt="">
       </div>
       <div class="col-col-md-12">
         <div class="col-md-2">
           <p class="text-primary">Tweets</p>
-          <p class="text-primary">0</p>
+          <p class="text-primary">{{tweets.length}}</p>
         </div>
         <div class="col-md-2">
           <p class="text-primary">Followers</p>
-          <p class="text-primary">0</p>
+          <p class="text-primary">{{user.followerCount}}</p>
         </div>
         <div class="col-md-2">
           <p class="text-primary">Following</p>
-          <p class="text-primary">0</p>
+          <p class="text-primary">{{user.followingCount}}</p>
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" @click="show = true">Add Tweet</button>
@@ -37,16 +37,16 @@
       </div>
     </div>
     <div class="col-md-12">
-      <div class="tweet" v-for="n in 10">
+      <div class="tweet" v-for="tweet in tweets">
         <div class="col-md-12">
           <div class="col-md-9">
-            <p><strong>Mehmet0</strong> @Mehmet0 - 4 weeks ago</p>
+            <p><strong>{{tweet.user.username}}</strong> {{tweet.user.username}} - {{tweet.timeAgo}}</p>
           </div>
           <div class="col-md-3">
             <i class="fa fa-heart" aria-hidden="true"></i> 0
           </div>
           <div class="col-md-12">
-            <p>Hallo{{n}}</p>
+            <p>{{tweet.tweet}}</p>
           </div>
         </div>
       </div>
@@ -63,6 +63,7 @@
 
 <script>
   import { modal } from 'vue-strap';
+  import store from '@/store';
 
   export default {
     components: { modal },
@@ -73,14 +74,50 @@
       };
     },
     computed: {
+      user() {
+        return store.state.user;
+      },
+      tweets() {
+        return store.state.tweets;
+      },
     },
     methods: {
       saveTweet() {
+        const user = store.state.user;
+        const tweet = {
+          tweet: this.newTweet,
+          user,
+        };
+        this.newTweet = '';
+        this.$http.post('api/tweet', tweet).then((response) => {
+          this.tweets.unshift(response.data);
+        }).catch((error) => {
+          self.$Message.error(error, 30);
+        });
         this.show = false;
       },
       cancelTweet() {
         this.show = false;
       },
+      currentUser() {
+        this.$http.get('api/user/currentuser', null, localStorage.getItem('__token')).then((response) => {
+          store.commit('login', response.data);
+          this.getMyTweets();
+        }).catch((error) => {
+          self.$Message.error(error, 30);
+        });
+      },
+      getMyTweets() {
+        const user = store.state.user;
+        this.$http.get('api/user/' + user.id + '/tweets/recent', null, localStorage.getItem('__token')).then((response) => {
+          store.commit('tweets', response.data);
+        }).catch((error) => {
+          self.$Message.error(error, 30);
+        });
+      },
+    },
+    mounted() {
+      this.currentUser();
     },
   };
 

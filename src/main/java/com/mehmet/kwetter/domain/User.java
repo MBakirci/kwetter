@@ -46,6 +46,11 @@ public class User implements Serializable {
     private Date registerationDate;
     private boolean disabled;
 
+    @Transient
+    private int followerCount;
+    @Transient
+    private int followingCount;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(
             name = "follower",
@@ -199,5 +204,13 @@ public class User implements Serializable {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public int getFollowerCount() {
+        return this.followers.size();
+    }
+
+    public int getFollowingCount() {
+        return this.following.size();
     }
 }
