@@ -21,7 +21,7 @@
       <div class="col-col-md-12">
         <div class="col-md-2">
           <p class="text-primary">Tweets</p>
-          <p class="text-primary">{{tweets.length}}</p>
+          <p class="text-primary">{{myTweets.length}}</p>
         </div>
         <div class="col-md-2">
           <p class="text-primary">Followers</p>
@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="col-md-12">
-      <div class="tweet" v-for="tweet in tweets">
+      <div class="tweet" v-for="tweet in myTweets">
         <div class="col-md-12">
           <div class="col-md-9">
             <p><strong>{{tweet.user.username}}</strong> {{tweet.user.username}} - {{tweet.timeAgo}}</p>
@@ -63,7 +63,6 @@
 
 <script>
   import { modal } from 'vue-strap';
-  import store from '@/store';
 
   export default {
     components: { modal },
@@ -71,26 +70,27 @@
       return {
         show: false,
         newTweet: '',
+        myTweets: '',
       };
     },
     computed: {
       user() {
-        return store.state.user;
+        return this.$store.state.user;
       },
       tweets() {
-        return store.state.tweets;
+        return this.$store.state.myTweets;
       },
     },
     methods: {
       saveTweet() {
-        const user = store.state.user;
+        const user = this.$store.state.user;
         const tweet = {
           tweet: this.newTweet,
           user,
         };
         this.newTweet = '';
         this.$http.post('api/tweet', tweet).then((response) => {
-          this.tweets.unshift(response.data);
+          this.myTweets.unshift(response.data);
         }).catch((error) => {
           self.$Message.error(error, 30);
         });
@@ -99,25 +99,17 @@
       cancelTweet() {
         this.show = false;
       },
-      currentUser() {
-        this.$http.get('api/user/currentuser', null, localStorage.getItem('__token')).then((response) => {
-          store.commit('login', response.data);
-          this.getMyTweets();
-        }).catch((error) => {
-          self.$Message.error(error, 30);
-        });
-      },
       getMyTweets() {
-        const user = store.state.user;
-        this.$http.get('api/user/' + user.id + '/tweets/recent', null, localStorage.getItem('__token')).then((response) => {
-          store.commit('tweets', response.data);
+        const user = this.$store.state.user;
+        this.$http.get('api/user/' + user.id + '/tweets/', null, localStorage.getItem('__token')).then((response) => {
+          this.myTweets = response.data;
         }).catch((error) => {
           self.$Message.error(error, 30);
         });
       },
     },
     mounted() {
-      this.currentUser();
+      this.getMyTweets();
     },
   };
 

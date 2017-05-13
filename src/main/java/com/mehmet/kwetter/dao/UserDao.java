@@ -33,4 +33,6 @@ public interface UserDao extends IDao<User> {
     RoleEnum getUserPermission(String username);
 
     void setActivate(User user, boolean activate);
+
+    void changeRole(User user, RoleEnum role);
 }

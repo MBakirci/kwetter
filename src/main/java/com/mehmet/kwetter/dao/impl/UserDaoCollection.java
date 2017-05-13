@@ -52,6 +52,11 @@ public class UserDaoCollection implements UserDao {
     }
 
     @Override
+    public void changeRole(User user, RoleEnum role) {
+
+    }
+
+    @Override
     public User find(Object id) throws UserNotFoundException {
         for (User user : users) {
             if (user.getId() == (Long) id) {

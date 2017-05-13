@@ -1,9 +1,23 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/store';
 
 Vue.use(Router);
 
-export default new Router({
+function checkAuth(to, from, next) {
+  const auth = store.state.auth;
+
+  if (!auth.isLoggedIn) {
+    next({
+      name: 'Login',
+      query: { redirect: to.fullPath },
+    });
+  } else {
+    next();
+  }
+}
+
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -16,16 +30,22 @@ export default new Router({
           component: require('../pages/user/home.vue'),
         },
         {
-          path: '/user/profile',
+          path: '/admin',
+          name: 'Admin',
+          component: require('../pages/admin/admin.vue'),
+        },
+        {
+          path: '/user/profile/:userId',
           name: 'Profile',
           component: require('../pages/user/profile.vue'),
         },
         {
-          path: '/user/search',
-          name: 'SearchResults',
+          path: '/user/search/:q',
+          name: 'Search',
           component: require('../pages/user/searchresults.vue'),
         },
       ],
+      beforeEnter: checkAuth,
     },
     {
       path: '/login',
@@ -44,3 +64,5 @@ export default new Router({
     },
   ],
 });
+
+export default router;

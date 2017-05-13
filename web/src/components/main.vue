@@ -39,7 +39,10 @@
           </form>
           <dropdown :text="username" type="primary">
             <li>
-              <router-link to="/user/profile">Profile</router-link>
+              <router-link :to="{ name: 'Profile', params: { userId }}">Profile</router-link>
+            </li>
+            <li v-if="isAdmin">
+              <router-link :to="{ name: 'Admin'}">Admin Panel</router-link>
             </li>
             <li role="separator" class="divider"></li>
             <li @click="logout()">
@@ -50,7 +53,7 @@
       </div>
     </nav>
     <div class="container">
-      <router-view></router-view>
+      <router-view :key="$route.path"></router-view>
     </div>
   </div>
 </template>
@@ -70,15 +73,23 @@
       username() {
         return store.state.user.username;
       },
+      userId() {
+        return store.state.user.id;
+      },
+      isAdmin() {
+        if (store.state.user.role === 'ADMIN') {
+          return true;
+        }
+        return false;
+      },
       logout() {
-        localStorage.removeItem('__token');
-        store.state.user = '';
-        store.state.tweets = {};
+        store.commit('CLEAR_ALL_DATA');
+        this.$router.push({ name: 'Home' });
       },
     },
     methods: {
       search() {
-        this.$router.push({ path: '/user/search', query: { q: this.searchQuery } });
+        this.$router.push({ name: 'Search', params: { q: this.searchQuery } });
       },
     },
   };

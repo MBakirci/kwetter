@@ -50,6 +50,8 @@ public class User implements Serializable {
     private int followerCount;
     @Transient
     private int followingCount;
+    @Transient
+    private int tweetCount;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(
@@ -175,7 +177,7 @@ public class User implements Serializable {
     }
 
     public void setRole(RoleEnum role) {
-        role = role;
+        this.role = role;
     }
 
     public boolean isActivated() {
@@ -212,5 +214,9 @@ public class User implements Serializable {
 
     public int getFollowingCount() {
         return this.following.size();
+    }
+
+    public int getTweetCount() {
+        return this.tweets.size();
     }
 }

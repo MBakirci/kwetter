@@ -22,6 +22,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -137,6 +138,12 @@ public class UserResource {
 
     //region Followers
     @GET
+    @Path("{id}/following")
+    public Set<User> getFollowing(@PathParam("id") Long id) throws UserNotFoundException, TweetNotFoundException {
+        return userService.getUser(id).getFollowing();
+    }
+
+    @GET
     @Path("{id}/followers")
     public Set<User> getFollowers(@PathParam("id") Long id) throws UserNotFoundException, TweetNotFoundException {
         return userService.getUser(id).getFollowers();
@@ -156,5 +163,17 @@ public class UserResource {
         userService.unFollowUser(users.get(1).getId(), users.get(0).getId());
     }
     //endregion
+
+    @GET
+    @Path("search/{username}")
+    public List searchUser(@PathParam("username") String username){
+        ArrayList<User> users = new ArrayList<>();
+        for (User u: userService.getUsers()) {
+            if(u.getUsername().toLowerCase().contains(username.toLowerCase())) {
+                users.add(u);
+            }
+        }
+        return users;
+    }
 
 }

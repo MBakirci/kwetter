@@ -53,6 +53,12 @@ public class UserDaoJPA extends DaoFacade<User> implements UserDao {
     }
 
     @Override
+    public void changeRole(User user, RoleEnum role) {
+        user.setRole(role);
+        this.update(user);
+    }
+
+    @Override
     public void setEm(EntityManager em) {
         this.em = em;
     }

@@ -30,6 +30,14 @@ export default {
       headers: this.getHeaders(),
     });
   },
+  put(url, data) {
+    return axios({
+      method: 'put',
+      url: baseURL + url,
+      data,
+      headers: this.getHeaders(),
+    });
+  },
   form(url, formdata) {
     return axios({
       method: 'post',

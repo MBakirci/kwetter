@@ -1,24 +1,38 @@
-/*eslint-disable*/
+// import vue from 'vue';
+// import Vuex from 'vuex';
 
-import vue from 'vue';
+// vue.use(Vuex);
+
+// const store = new Vuex.Store({
+//   state: {
+//     user: '',
+//     tweets: '',
+//   },
+//   mutations: {
+//     login(state, currentUser) {
+//       state.user = currentUser;
+//     },
+//     tweets(state, mytweets) {
+//       state.tweets = mytweets;
+//     }
+//   },
+// });
+import Vue from 'vue';
 import Vuex from 'vuex';
+import { state } from './state';
+import * as getters from './getters';
+import * as actions from './actions';
+import * as mutations from './mutations';
+import plugins from './plugins';
 
-vue.use(Vuex);
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-    user: '',
-    tweets: '',
-  },
-  mutations: {
-    login(state, currentUser) {
-      state.user = currentUser;
-    },
-    tweets(state, mytweets) {
-      state.tweets = mytweets;
-    }
-  },
+  state,
+  getters,
+  actions,
+  mutations,
+  plugins,
 });
 
 export default store;
-/*eslint-enable*/

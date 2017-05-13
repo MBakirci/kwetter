@@ -2,6 +2,7 @@ package com.mehmet.kwetter.service;
 
 import com.mehmet.kwetter.dao.TweetDao;
 import com.mehmet.kwetter.dao.UserDao;
+import com.mehmet.kwetter.domain.RoleEnum;
 import com.mehmet.kwetter.domain.User;
 import com.mehmet.kwetter.exception.TweetNotFoundException;
 import com.mehmet.kwetter.exception.UserAlreadyExcistException;
@@ -85,5 +86,9 @@ public class UserService {
 
     public void deleteNotActivated(User user) throws UserNotFoundException, TweetNotFoundException {
         userDao.update(user);
+    }
+
+    public void changeRole(User user, RoleEnum role) {
+        userDao.changeRole(user,role);
     }
 }

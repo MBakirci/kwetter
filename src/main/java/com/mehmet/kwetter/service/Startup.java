@@ -10,6 +10,7 @@ import com.mehmet.kwetter.exception.UserNotFoundException;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import javax.management.relation.Role;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -36,7 +37,9 @@ public class Startup {
         List<Tweet> tweets = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
-            users.add(new User("Mehmet" + i, "geen locatie", new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""), "password"));
+            users.add(new User("Mehmet" + i, "geen locatie",
+                    new UserDetail("ik ben Mehmet en woon in Breda", "Breda", ""),
+                    "password"));
         }
 
         for (User user : users) {
@@ -48,15 +51,23 @@ public class Startup {
             userService.setActivate(users.get(i), true, users.get(i).getActivationCode());
         }
 
+        userService.changeRole(users.get(0), RoleEnum.ADMIN);
+
 
         for (int i = 0; i < 10; i++) {
-            tweets.add(new Tweet("Hallo" + i, new GregorianCalendar(2017, 2, 14, 10, 10, i), users.get(i)));
+            tweets.add(new Tweet("Hallo" + i,
+                    new GregorianCalendar(2017, 2, 14, 10, 10, i),
+                    users.get(i)));
         }
 
         for (int i = 0; i < 20; i++) {
-            tweets.add(new Tweet("Hallo" + i, new GregorianCalendar(2017, 2, 14, 10, 20, i), users.get(0)));
+            tweets.add(new Tweet("Hallo" + i,
+                    new GregorianCalendar(2017, 2, 14, 10, 20, i),
+                    users.get(0)));
         }
-        tweets.add(new Tweet("fuck", new GregorianCalendar(2017, 2, 14, 10, 20, 1), users.get(0)));
+        tweets.add(new Tweet("fuck",
+                new GregorianCalendar(2017, 2, 14, 10, 20, 1),
+                users.get(0)));
 
         for (Tweet tweet : tweets) {
             tweetService.createTweet(tweet);

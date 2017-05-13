@@ -56,7 +56,20 @@
     methods: {
       login() {
         this.$http.post('api/auth', this.credentials).then((response) => {
-          localStorage.setItem('__token', response.data.token);
+          const auth = store.state.auth;
+          // Auth
+          auth.isLoggedIn = true;
+          auth.accessToken = response.data.token;
+          store.commit('UPDATE_AUTH', auth);
+        }).catch((error) => {
+          self.$Message.error(error, 30);
+        });
+        this.currentUser();
+      },
+      currentUser() {
+        const token = store.state.auth.accessToken;
+        this.$http.get('api/user/currentuser', null, token).then((response) => {
+          this.$store.commit('UPDATE_USER', response.data);
           this.$router.push({ name: 'Home' });
         }).catch((error) => {
           self.$Message.error(error, 30);
