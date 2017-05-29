@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -36,15 +37,22 @@ public class User implements Serializable {
     private UserDetail userdetail;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Tweet> tweets;
+    private Set<Tweet> tweets = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Heart> hearts;
 
     private String activationCode;
     private boolean activated;
-    private Date registerationDate;
+    private Calendar registerationDate;
+
+    @Transient
+    private String dateString;
+
     private boolean disabled;
+
+    @Transient
+    private List<Link> links = new ArrayList<>();
 
     @Transient
     private int followerCount;
@@ -67,7 +75,7 @@ public class User implements Serializable {
     public User() {
         this.role = RoleEnum.USER;
         this.activationCode = new BigInteger(130, new SecureRandom()).toString(32);
-        this.registerationDate = new GregorianCalendar().getTime();
+        this.registerationDate = new GregorianCalendar();
     }
 
     public User(String username, String profilePicUrl, UserDetail userDetail, String password) {
@@ -78,7 +86,7 @@ public class User implements Serializable {
         this.role = RoleEnum.USER;
         this.activationCode = new BigInteger(130, new SecureRandom()).toString(32);
         this.activated = false;
-        this.registerationDate = new GregorianCalendar(2017, Calendar.APRIL,1).getTime();
+        this.registerationDate = new GregorianCalendar(2017, Calendar.APRIL,1);
     }
 
     public long getId() {
@@ -196,7 +204,8 @@ public class User implements Serializable {
         this.activationCode = activationCode;
     }
 
-    public Date getRegisterationDate() {
+    @XmlTransient
+    public Calendar getRegisterationDate() {
         return registerationDate;
     }
 
@@ -218,5 +227,23 @@ public class User implements Serializable {
 
     public int getTweetCount() {
         return this.tweets.size();
+    }
+
+    public String getDateString() {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        fmt.setCalendar(registerationDate);
+        return fmt.format(registerationDate.getTime());
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
     }
 }

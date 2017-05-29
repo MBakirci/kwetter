@@ -70,7 +70,7 @@
       return {
         show: false,
         newTweet: '',
-        myTweets: '',
+        myTweets: [],
       };
     },
     computed: {
@@ -95,17 +95,23 @@
           self.$Message.error(error, 30);
         });
         this.show = false;
+        this.sendSocket(tweet);
       },
       cancelTweet() {
         this.show = false;
       },
       getMyTweets() {
-        const user = this.$store.state.user;
-        this.$http.get('api/user/' + user.id + '/tweets/', null, localStorage.getItem('__token')).then((response) => {
+        const token = this.$store.state.auth.accessToken;
+        const userId = this.$store.state.user.id;
+        this.$http.get('api/user/' + userId + '/tweets/', null, token).then((response) => {
           this.myTweets = response.data;
         }).catch((error) => {
           self.$Message.error(error, 30);
         });
+      },
+      sendSocket(message) {
+        const tweet = JSON.stringify(message);
+        this.$parent.websocket.send(tweet);
       },
     },
     mounted() {

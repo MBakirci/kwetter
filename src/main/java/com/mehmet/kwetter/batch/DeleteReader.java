@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,11 +33,12 @@ public class DeleteReader extends AbstractItemReader {
         return null;
     }
 
-    private boolean olderThanToday(Date givenDate)
+    private boolean olderThanToday(Calendar givenDate)
     {
-        long currentMillis = new Date().getTime();
-        long millisInDays = 2 * 24 * 60 * 60 * 1000;
-        boolean result = givenDate.getTime() < (currentMillis - millisInDays);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_WEEK, -1);
+        boolean result = givenDate.after(cal);
         return result;
     }
 }

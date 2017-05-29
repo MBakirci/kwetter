@@ -11,6 +11,7 @@ let syncedData = {
 };
 
 const notSyncedData = {
+  messages: [],
   search: {
     searchText: '',
   },

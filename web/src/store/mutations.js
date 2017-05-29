@@ -15,6 +15,13 @@ export const SEARCH = (state, searchData) => {
   state.search = searchData;
 };
 
+export const UPDATE_MESSAGES = (state, message) => {
+  if (state.messages.length === 0) {
+    state.messages = [];
+  }
+  state.messages.push(message);
+};
+
 /**
  * Clear each property, one by one, so reactivity still works.
  *
@@ -34,4 +41,6 @@ export const CLEAR_ALL_DATA = (state) => {
 
   // Tweets
   state.myTweets = '';
+
+  state.messages = '';
 };

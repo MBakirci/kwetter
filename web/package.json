@@ -16,6 +16,7 @@
     "axios": "^0.16.0",
     "bulma": "^0.4.0",
     "vue": "^2.2.2",
+    "vue-lang": "^0.2.5",
     "vue-router": "^2.2.0",
     "vue-strap": "github:wffranco/vue-strap",
     "vuex": "^2.2.1"

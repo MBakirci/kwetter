@@ -1,6 +1,7 @@
 package com.mehmet.kwetter.rest;
 
 import com.mehmet.kwetter.dao.Secured;
+import com.mehmet.kwetter.domain.Link;
 import com.mehmet.kwetter.domain.RoleEnum;
 import com.mehmet.kwetter.domain.Tweet;
 import com.mehmet.kwetter.domain.User;
@@ -21,6 +22,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class UserResource {
     @Inject
     TweetService tweetService;
 
-    private User user;
+    private static User user;
 
     @Context
     SecurityContext securityContext;
@@ -62,7 +64,7 @@ public class UserResource {
     }
 
     @GET
-    @Path("{currentuser}")
+    @Path("curr/{currentuser}")
     @Secured({RoleEnum.ADMIN, RoleEnum.USER})
     public User getCurrentUser() {
         return user;
@@ -86,8 +88,15 @@ public class UserResource {
 
     @GET
     @Path("{id}")
-    public User getUser(@PathParam("id") Long id) throws UserNotFoundException, TweetNotFoundException {
-        return userService.getUser(id);
+    public User getUser(@PathParam("id") Long id, @Context UriInfo uriInfo) throws UserNotFoundException, TweetNotFoundException {
+        User u =  userService.getUser(id);
+        String url = uriInfo.getBaseUriBuilder()
+                .path(UserResource.class)
+                .path(Long.toString(u.getId()))
+                .build()
+                .toString();
+        u.getLinks().add(new Link(url,"self"));
+        return u;
     }
     //endregion
 

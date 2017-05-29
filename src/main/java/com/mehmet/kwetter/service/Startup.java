@@ -28,6 +28,7 @@ public class Startup {
     @Inject
     private TweetService tweetService;
 
+
     public Startup() {
     }
 
@@ -81,5 +82,6 @@ public class Startup {
         tweetService.likeTweet(tweets.get(1), users.get(5));
         userService.followUser(users.get(1).getId(), users.get(0).getId());
         userService.followUser(5L, 6L);
+
     }
 }
